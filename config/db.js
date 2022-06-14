@@ -9,6 +9,7 @@ const dbAdapter = low(adapter);
 
 const defaultDb = { users: [], fighters: [], fights: [] };
 
+// const defaultDb = {users: []}
 dbAdapter.defaults(defaultDb).write();
 
 exports.dbAdapter = dbAdapter;

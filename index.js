@@ -12,8 +12,11 @@ const routes = require('./routes/index');
 routes(app);
 
 app.use('/', express.static('./client/build'));
+// app.use()
 
 const port = 3050;
-app.listen(port, () => {});
+app.listen(port, () => {
+  console.log(`Server started on http://localhost:${port}`)
+});
 
 exports.app = app;

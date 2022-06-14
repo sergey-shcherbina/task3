@@ -1,7 +1,6 @@
 const { dbAdapter } = require('../config/db');
 const { v4 } = require('uuid');
 
-
 class BaseRepository {
     constructor(collectionName) {
         this.dbContext = dbAdapter.get(collectionName);
@@ -17,7 +16,10 @@ class BaseRepository {
     }
 
     getOne(search) {
-        return this.dbContext.find(search).value();
+        return this.dbContext.find(it => 
+            search.substr(-10) === '@gmail.com' ? it.email === search : 
+            search.substr(0, 4) === '+380' ? it.phoneNumber === search : 
+            it.id === search).value();
     }
 
     create(data) {
@@ -29,11 +31,11 @@ class BaseRepository {
 
     update(id, dataToUpdate) {
         dataToUpdate.updatedAt = new Date();
-        return this.dbContext.find({ id }).assign(dataToUpdate).write();
+        return this.dbContext.find(it => it.id === id).assign(dataToUpdate).write();
     }
 
     delete(id) {
-        return this.dbContext.remove({ id }).write();
+        return this.dbContext.remove(it => it.id === id).write();
     }
 }
 
